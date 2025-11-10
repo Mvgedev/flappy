@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bqt183ikvb1ni" path="res://scenes/player.tscn" id="1_8mhku"]
 [ext_resource type="Script" uid="uid://d1g147ojau25o" path="res://scripts/game_manager.gd" id="1_85ytm"]
 [ext_resource type="PackedScene" uid="uid://cyo4n6qvd65tp" path="res://scenes/killzone.tscn" id="3_3uriw"]
-[ext_resource type="PackedScene" uid="uid://drfgre6u6u6i7" path="res://scenes/obstacles_pair.tscn" id="4_dv2sx"]
+[ext_resource type="FontFile" uid="uid://lf6telyhsyjl" path="res://assets/fonts/PixelOperator8.ttf" id="4_dv2sx"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_3uriw"]
 a = Vector2(-292, 0)
@@ -20,12 +20,12 @@ b = Vector2(0, -160)
 [node name="GameScreen" type="Node2D"]
 
 [node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("1_85ytm")
 
 [node name="Player" parent="." instance=ExtResource("1_8mhku")]
 unique_name_in_owner = true
 position = Vector2(-200, -13)
-collision_layer = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -46,17 +46,56 @@ shape = SubResource("SegmentShape2D_dv2sx")
 
 [node name="BorderLeft" type="Area2D" parent="Borders"]
 position = Vector2(-336, 1)
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BorderLeft"]
 shape = SubResource("SegmentShape2D_rxmqw")
 
 [node name="BorderRight" type="Area2D" parent="Borders"]
 position = Vector2(393, 1)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/BorderRight"]
 shape = SubResource("SegmentShape2D_rxmqw")
 
 [node name="Obstacles" type="Node" parent="."]
 
-[node name="ObstaclesPair" parent="Obstacles" instance=ExtResource("4_dv2sx")]
-position = Vector2(94, 11)
+[node name="Labels" type="Node" parent="."]
+
+[node name="Score" type="Label" parent="Labels"]
+offset_left = -279.0
+offset_top = -155.0
+offset_right = -239.0
+offset_bottom = -132.0
+theme_override_fonts/font = ExtResource("4_dv2sx")
+theme_override_font_sizes/font_size = 16
+text = "Score: X"
+
+[node name="Best Score" type="Label" parent="Labels"]
+offset_left = -279.0
+offset_top = -134.0
+offset_right = -115.0
+offset_bottom = -111.0
+theme_override_fonts/font = ExtResource("4_dv2sx")
+theme_override_font_sizes/font_size = 16
+text = "Best score: X"
+
+[node name="Instruction" type="Label" parent="Labels"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -781.0
+offset_top = -341.5
+offset_right = -371.0
+offset_bottom = -306.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_dv2sx")
+theme_override_font_sizes/font_size = 16
+text = "Press space or left mouse button
+to start the game"
+horizontal_alignment = 1
+
+[connection signal="area_entered" from="Borders/BorderLeft" to="GameManager" method="_on_border_left_area_entered"]

@@ -1,9 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://drfgre6u6u6i7"]
+[gd_scene load_steps=4 format=3 uid="uid://drfgre6u6u6i7"]
 
 [ext_resource type="Script" uid="uid://btwxr8m56jokh" path="res://scripts/obstacles_pair.gd" id="1_kuope"]
 [ext_resource type="PackedScene" uid="uid://dp6hjc82g11om" path="res://scenes/obstacle.tscn" id="1_rqn0e"]
 
-[node name="ObstaclesPair" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kuope"]
+size = Vector2(20, 90)
+
+[node name="ObstaclesPair" type="Area2D"]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_kuope")
 
 [node name="TopObstacle" parent="." instance=ExtResource("1_rqn0e")]
@@ -12,3 +17,8 @@ rotation = -3.1415925
 
 [node name="BottomObstacle" parent="." instance=ExtResource("1_rqn0e")]
 position = Vector2(0, 180)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kuope")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

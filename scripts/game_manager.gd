@@ -4,17 +4,60 @@ extends Node
 @onready var obstacles: Node = $"../Obstacles"
 @onready var border_right: Area2D = $"../Borders/BorderRight"
 
+#Labels
+@onready var score: Label = $"../Labels/Score"
+@onready var best_score: Label = $"../Labels/Best Score"
+@onready var instruction: Label = $"../Labels/Instruction"
+
 var OBSTACLES_PAIR = preload("res://scenes/obstacles_pair.tscn")
 # Spawn y -80 to y 80 for obstacles
 
+# Game values
 var game_start = false
+var obs_speed = 100
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	ScoreSystem.cur_score = 0
+	update_label()
+
+func start_game():
+	game_start = true
+	instruction.visible = false
+	player.gravity_scale = 1.0
+	spawn_obstacles()
+	await get_tree().create_timer(2.3).timeout
+	spawn_obstacles()
+	await get_tree().create_timer(2.3).timeout
 	spawn_obstacles()
 
 func spawn_obstacles():
 	var obsPair = OBSTACLES_PAIR.instantiate()
-	obstacles.add_child(obsPair)
+	obsPair.game_manager = self
+	get_tree().current_scene.get_node("Obstacles").call_deferred("add_child", obsPair)
 	#Define base position
 	obsPair.position.x = border_right.position.x
 	obsPair.position.y = randf_range(-80, 80)
+	
+
+func obstacle_speed_variant():
+	obs_speed = 100 + ScoreSystem.cur_score * 10
+	
+
+func _on_border_left_area_entered(area: Area2D) -> void:
+	area.queue_free()
+	spawn_obstacles()
+
+func add_score():
+	ScoreSystem.cur_score += 1
+	if ScoreSystem.cur_score > ScoreSystem.pb_score:
+		ScoreSystem.pb_score = ScoreSystem.cur_score
+	update_label()
+	if ScoreSystem.cur_score == 10 || ScoreSystem.cur_score == 20 || ScoreSystem.cur_score == 30:
+		obstacle_speed_variant()
+
+
+func update_label():
+	score.text = "Score: " + str(ScoreSystem.cur_score)
+	best_score.text = "Best score: " + str(ScoreSystem.pb_score)
