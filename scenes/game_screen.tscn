@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://c5gydx4og72e"]
+
+[ext_resource type="PackedScene" uid="uid://bqt183ikvb1ni" path="res://scenes/player.tscn" id="1_8mhku"]
+[ext_resource type="Script" uid="uid://d1g147ojau25o" path="res://scripts/game_manager.gd" id="1_85ytm"]
+[ext_resource type="PackedScene" uid="uid://cyo4n6qvd65tp" path="res://scenes/killzone.tscn" id="3_3uriw"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_3uriw"]
+a = Vector2(-292, 0)
+b = Vector2(302, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_dv2sx"]
+a = Vector2(-291, 0)
+b = Vector2(289, 0)
+
+[node name="GameScreen" type="Node2D"]
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("1_85ytm")
+
+[node name="Player" parent="." instance=ExtResource("1_8mhku")]
+position = Vector2(-200, -50)
+collision_layer = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="Node" type="Node" parent="."]
+
+[node name="KillzoneBottom" parent="Node" instance=ExtResource("3_3uriw")]
+position = Vector2(0, 168)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/KillzoneBottom"]
+shape = SubResource("SegmentShape2D_3uriw")
+
+[node name="KillzoneTop" parent="Node" instance=ExtResource("3_3uriw")]
+position = Vector2(0, -167)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/KillzoneTop"]
+shape = SubResource("SegmentShape2D_dv2sx")
