@@ -3,6 +3,9 @@ extends Node
 var cur_score = 0
 var pb_score = 0
 
+signal game_over()
+
+
 const SAVE_FILE = "user://savegame.save"
 
 func _ready() -> void:
@@ -22,3 +25,7 @@ func load_score():
 	file.close()
 	if typeof(data) == TYPE_DICTIONARY and data.has("pb_score"):
 		pb_score = data["pb_score"] as int
+
+func end_game():
+	emit_signal("game_over")
+	save_score()

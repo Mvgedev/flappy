@@ -98,4 +98,23 @@ text = "Press space or left mouse button
 to start the game"
 horizontal_alignment = 1
 
+[node name="GameOver" type="Label" parent="Labels"]
+offset_left = -134.0
+offset_top = -65.0
+offset_right = 134.0
+offset_bottom = -33.0
+theme_override_fonts/font = ExtResource("4_dv2sx")
+theme_override_font_sizes/font_size = 32
+text = "Game Over!"
+
+[node name="Recap score" type="Label" parent="Labels"]
+offset_left = -130.0
+offset_top = -20.0
+offset_right = 130.0
+offset_bottom = 15.0
+theme_override_fonts/font = ExtResource("4_dv2sx")
+text = "Your score is: X
+Your best score is: X"
+horizontal_alignment = 1
+
 [connection signal="area_entered" from="Borders/BorderLeft" to="GameManager" method="_on_border_left_area_entered"]
