@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dp6hjc82g11om"]
+
+[ext_resource type="Texture2D" uid="uid://o8k0n8btl6bb" path="res://assets/sprites/Obstaclev2.png" id="1_drdry"]
+[ext_resource type="PackedScene" uid="uid://cyo4n6qvd65tp" path="res://scenes/killzone.tscn" id="2_drdry"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_drdry"]
+size = Vector2(18, 258)
+
+[node name="Obstacle" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_drdry")
+
+[node name="Killzone" parent="." instance=ExtResource("2_drdry")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+position = Vector2(-2, 0)
+shape = SubResource("RectangleShape2D_drdry")

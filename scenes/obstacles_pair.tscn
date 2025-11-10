@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://drfgre6u6u6i7"]
+
+[ext_resource type="Script" uid="uid://btwxr8m56jokh" path="res://scripts/obstacles_pair.gd" id="1_kuope"]
+[ext_resource type="PackedScene" uid="uid://dp6hjc82g11om" path="res://scenes/obstacle.tscn" id="1_rqn0e"]
+
+[node name="ObstaclesPair" type="Node2D"]
+script = ExtResource("1_kuope")
+
+[node name="TopObstacle" parent="." instance=ExtResource("1_rqn0e")]
+position = Vector2(0, -180)
+rotation = -3.1415925
+
+[node name="BottomObstacle" parent="." instance=ExtResource("1_rqn0e")]
+position = Vector2(0, 180)
