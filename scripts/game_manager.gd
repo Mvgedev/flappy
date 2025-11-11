@@ -8,8 +8,9 @@ extends Node
 @onready var score: Label = $"../Labels/Score"
 @onready var best_score: Label = $"../Labels/Best Score"
 @onready var instruction: Label = $"../Labels/Instruction"
-@onready var game_over: Label = $"../Labels/GameOver"
-@onready var recap_score: Label = $"../Labels/Recap score"
+@onready var game_over: Label = $"../CanvasLayer/UIPanel/TextureRect/GameOver"
+@onready var recap_score: Label = $"../CanvasLayer/UIPanel/TextureRect/Recap score"
+@onready var ui_panel: Control = $"../CanvasLayer/UIPanel"
 
 
 var OBSTACLES_PAIR = preload("res://scenes/obstacles_pair.tscn")
@@ -24,8 +25,9 @@ var obs_speed = 100
 func _ready() -> void:
 	ScoreSystem.cur_score = 0
 	ScoreSystem.connect("game_over", end_game)
-	game_over.visible = false
-	recap_score.visible = false
+	ui_panel.visible = false
+	#game_over.visible = false
+	#recap_score.visible = false
 	update_label()
 
 func start_game():
@@ -43,9 +45,10 @@ func end_game():
 	player.dead = true
 	score.visible = false
 	best_score.visible = false
-	game_over.visible = true
-	recap_score.text = "Your score is: " + str(ScoreSystem.cur_score) + "\nYour best score is: " + str(ScoreSystem.pb_score)
-	recap_score.visible = true
+	recap_score.text = "Your score is " + str(ScoreSystem.cur_score) + "\nYour best score is " + str(ScoreSystem.pb_score)
+	ui_panel.visible = true
+
+	
 
 func spawn_obstacles():
 	var obsPair = OBSTACLES_PAIR.instantiate()
@@ -76,3 +79,7 @@ func add_score():
 func update_label():
 	score.text = "Score: " + str(ScoreSystem.cur_score)
 	best_score.text = "Best score: " + str(ScoreSystem.pb_score)
+
+
+func _on_retry_button_pressed() -> void:
+	get_tree().reload_current_scene()

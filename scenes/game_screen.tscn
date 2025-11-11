@@ -1,9 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://c5gydx4og72e"]
+[gd_scene load_steps=12 format=3 uid="uid://c5gydx4og72e"]
 
 [ext_resource type="PackedScene" uid="uid://bqt183ikvb1ni" path="res://scenes/player.tscn" id="1_8mhku"]
 [ext_resource type="Script" uid="uid://d1g147ojau25o" path="res://scripts/game_manager.gd" id="1_85ytm"]
 [ext_resource type="PackedScene" uid="uid://cyo4n6qvd65tp" path="res://scenes/killzone.tscn" id="3_3uriw"]
+[ext_resource type="Texture2D" uid="uid://d0i20lu022q7k" path="res://assets/sprites/UI Box.png" id="3_rxmqw"]
 [ext_resource type="FontFile" uid="uid://yxv4f1wj3ql8" path="res://assets/fonts/GothicPixels.ttf" id="4_dv2sx"]
+[ext_resource type="Texture2D" uid="uid://c5pk38y6wc0pu" path="res://assets/sprites/Button_Normal.png" id="5_dthvl"]
+[ext_resource type="Texture2D" uid="uid://clvbuuw6v5juw" path="res://assets/sprites/Button_Pressed.png" id="6_r01d7"]
+[ext_resource type="Script" uid="uid://cpb0bt4ff01hd" path="res://scripts/retry_button.gd" id="7_r01d7"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_3uriw"]
 a = Vector2(-292, 0)
@@ -29,6 +33,83 @@ position = Vector2(-200, -13)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="UIPanel" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchor_left = -0.25
+anchor_top = -0.25
+anchor_right = 0.25
+anchor_bottom = 0.25
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UIPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -64.0
+offset_right = 128.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_rxmqw")
+stretch_mode = 3
+
+[node name="GameOver" type="Label" parent="CanvasLayer/UIPanel/TextureRect"]
+layout_mode = 0
+offset_left = -6.0
+offset_top = 10.0
+offset_right = 262.0
+offset_bottom = 42.0
+theme_override_colors/font_color = Color(0.11372549, 0.11372549, 0.2901961, 1)
+theme_override_fonts/font = ExtResource("4_dv2sx")
+theme_override_font_sizes/font_size = 32
+text = "Game Over!"
+horizontal_alignment = 1
+
+[node name="Recap score" type="Label" parent="CanvasLayer/UIPanel/TextureRect"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 47.0
+offset_right = 258.0
+offset_bottom = 82.0
+theme_override_colors/font_color = Color(0.11372549, 0.11372549, 0.2901961, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_dv2sx")
+text = "Your score is: X
+Your best score is: X"
+horizontal_alignment = 1
+
+[node name="RetryButton" type="TextureButton" parent="CanvasLayer/UIPanel/TextureRect"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 90.0
+offset_right = 152.0
+offset_bottom = 114.0
+texture_normal = ExtResource("5_dthvl")
+texture_pressed = ExtResource("6_r01d7")
+script = ExtResource("7_r01d7")
+
+[node name="Label" type="Label" parent="CanvasLayer/UIPanel/TextureRect/RetryButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_dv2sx")
+theme_override_font_sizes/font_size = 16
+text = "Play"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Borders" type="Node" parent="."]
 
@@ -98,24 +179,7 @@ text = "Press space or left mouse button
 to start the game"
 horizontal_alignment = 1
 
-[node name="GameOver" type="Label" parent="Labels"]
-offset_left = -134.0
-offset_top = -65.0
-offset_right = 134.0
-offset_bottom = -33.0
-theme_override_fonts/font = ExtResource("4_dv2sx")
-theme_override_font_sizes/font_size = 32
-text = "Game Over!"
-horizontal_alignment = 1
-
-[node name="Recap score" type="Label" parent="Labels"]
-offset_left = -130.0
-offset_top = -20.0
-offset_right = 130.0
-offset_bottom = 15.0
-theme_override_fonts/font = ExtResource("4_dv2sx")
-text = "Your score is: X
-Your best score is: X"
-horizontal_alignment = 1
-
+[connection signal="button_down" from="CanvasLayer/UIPanel/TextureRect/RetryButton" to="CanvasLayer/UIPanel/TextureRect/RetryButton" method="_on_button_down"]
+[connection signal="button_up" from="CanvasLayer/UIPanel/TextureRect/RetryButton" to="CanvasLayer/UIPanel/TextureRect/RetryButton" method="_on_button_up"]
+[connection signal="pressed" from="CanvasLayer/UIPanel/TextureRect/RetryButton" to="GameManager" method="_on_retry_button_pressed"]
 [connection signal="area_entered" from="Borders/BorderLeft" to="GameManager" method="_on_border_left_area_entered"]
