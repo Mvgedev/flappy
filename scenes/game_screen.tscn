@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bqt183ikvb1ni" path="res://scenes/player.tscn" id="1_8mhku"]
 [ext_resource type="Script" uid="uid://d1g147ojau25o" path="res://scripts/game_manager.gd" id="1_85ytm"]
 [ext_resource type="PackedScene" uid="uid://cyo4n6qvd65tp" path="res://scenes/killzone.tscn" id="3_3uriw"]
-[ext_resource type="FontFile" uid="uid://lf6telyhsyjl" path="res://assets/fonts/PixelOperator8.ttf" id="4_dv2sx"]
+[ext_resource type="FontFile" uid="uid://yxv4f1wj3ql8" path="res://assets/fonts/GothicPixels.ttf" id="4_dv2sx"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_3uriw"]
 a = Vector2(-292, 0)
@@ -106,6 +106,7 @@ offset_bottom = -33.0
 theme_override_fonts/font = ExtResource("4_dv2sx")
 theme_override_font_sizes/font_size = 32
 text = "Game Over!"
+horizontal_alignment = 1
 
 [node name="Recap score" type="Label" parent="Labels"]
 offset_left = -130.0

@@ -40,6 +40,7 @@ func start_game():
 
 func end_game():
 	obs_speed = 0
+	player.dead = true
 	score.visible = false
 	best_score.visible = false
 	game_over.visible = true
