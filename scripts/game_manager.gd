@@ -29,7 +29,7 @@ var OBSTACLES_PAIR = preload("res://scenes/obstacles_pair.tscn")
 
 # Game values
 var game_start = false
-var obs_speed = 100
+var obs_speed = 110
 var foreground_speed = -70
 var rocks_speed = -50
 var tentacles_speed = -30
@@ -41,13 +41,15 @@ func _ready() -> void:
 	ScoreSystem.connect("game_over", end_game)
 	ScoreSystem.connect("explosion", defeat)
 	ui_panel.visible = false
-	#game_over.visible = false
-	#recap_score.visible = false
+	score.visible = false
+	best_score.visible = false
 	update_label()
 
 func start_game():
 	game_start = true
 	instruction.visible = false
+	score.visible = true
+	best_score.visible = true
 	player.gravity_scale = 1.0
 	spawn_obstacles()
 	await get_tree().create_timer(2.3).timeout
@@ -80,8 +82,8 @@ func spawn_obstacles():
 	
 
 func obstacle_speed_variant():
-	var boost = ScoreSystem.cur_score * 10
-	obs_speed = 100 + boost
+	var boost = ScoreSystem.cur_score * 5
+	obs_speed = 110 + boost
 	parallax_foreground.autoscroll = Vector2(foreground_speed + -boost, 0)
 	parallax_rocks.autoscroll = Vector2(rocks_speed + -boost, 0)
 	parallax_tentacles.autoscroll = Vector2(tentacles_speed + -boost, 0)
@@ -102,13 +104,13 @@ func add_score():
 	if ScoreSystem.cur_score > ScoreSystem.pb_score:
 		ScoreSystem.pb_score = ScoreSystem.cur_score
 	update_label()
-	if ScoreSystem.cur_score == 10 || ScoreSystem.cur_score == 20 || ScoreSystem.cur_score == 30:
+	if ScoreSystem.cur_score % 10 == 0:
 		obstacle_speed_variant()
 
 
 func update_label():
-	score.text = "Score: " + str(ScoreSystem.cur_score)
-	best_score.text = "Best score: " + str(ScoreSystem.pb_score)
+	score.text = "Score : " + str(ScoreSystem.cur_score)
+	best_score.text = "Best score : " + str(ScoreSystem.pb_score)
 
 
 func _on_retry_button_pressed() -> void:
