@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bqt183ikvb1ni"]
+[gd_scene load_steps=10 format=3 uid="uid://bqt183ikvb1ni"]
 
 [ext_resource type="Script" uid="uid://y0wtkxnbitgh" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://c5e5rxjal512o" path="res://assets/sprites/Plane-Sheet.png" id="2_g2els"]
+[ext_resource type="AudioStream" uid="uid://b1xgieeo145uf" path="res://assets/sounds/sfx/jump.wav" id="3_qhqgy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
 atlas = ExtResource("2_g2els")
@@ -54,3 +55,7 @@ autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_g2els")
+
+[node name="Flap_FX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_qhqgy")
+bus = &"SFX"

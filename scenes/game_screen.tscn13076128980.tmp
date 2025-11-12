@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://cpb0bt4ff01hd" path="res://scripts/retry_button.gd" id="7_r01d7"]
 [ext_resource type="AudioStream" uid="uid://twk6gjl0addo" path="res://assets/sounds/sfx/explosion.wav" id="13_vqtp5"]
 [ext_resource type="AudioStream" uid="uid://dcbcm48f8s5tw" path="res://assets/sounds/sfx/loose.wav" id="14_8tvxp"]
-[ext_resource type="AudioStream" uid="uid://ghe5h5uvnql0" path="res://assets/sounds/sfx/score_fx.wav" id="15_8tvxp"]
+[ext_resource type="AudioStream" uid="uid://wdotv8rdg4l6" path="res://assets/sounds/sfx/score.wav" id="15_8tvxp"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_3uriw"]
 a = Vector2(-292, 0)

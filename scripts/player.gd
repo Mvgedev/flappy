@@ -1,6 +1,7 @@
 extends RigidBody2D
 
 @onready var game_manager: Node = %GameManager
+@onready var flap_fx: AudioStreamPlayer2D = $Flap_FX
 
 var flap_force = -300
 var dead = false
@@ -12,6 +13,7 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("Flap") and dead == false:
+		flap_fx.play(0.0)
 		if game_manager.game_start == false:
 			game_manager.start_game()
 		linear_velocity = Vector2.ZERO

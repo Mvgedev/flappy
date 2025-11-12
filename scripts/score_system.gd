@@ -4,6 +4,7 @@ var cur_score = 0
 var pb_score = 0
 
 signal game_over()
+signal explosion()
 
 
 const SAVE_FILE = "user://savegame.save"
@@ -27,6 +28,7 @@ func load_score():
 		pb_score = data["pb_score"] as int
 
 func end_game():
+	emit_signal("explosion")
 	var timer = get_tree().create_timer(0.5)
 	Engine.time_scale = 0.5
 	await timer.timeout

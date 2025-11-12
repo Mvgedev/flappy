@@ -18,6 +18,12 @@ extends Node
 @onready var parallax_rocks: Parallax2D = $"../Landscape/ParallaxRocks"
 @onready var parallax_tentacles: Parallax2D = $"../Landscape/ParallaxTentacles"
 
+# SFX
+@onready var explosion_sfx: AudioStreamPlayer2D = $"../SFX/Explosion"
+@onready var loose_sfx: AudioStreamPlayer2D = $"../SFX/Loose"
+@onready var score_sfx: AudioStreamPlayer2D = $"../SFX/ScoreSFX"
+
+
 var OBSTACLES_PAIR = preload("res://scenes/obstacles_pair.tscn")
 # Spawn y -80 to y 80 for obstacles
 
@@ -33,6 +39,7 @@ var tentacles_speed = -30
 func _ready() -> void:
 	ScoreSystem.cur_score = 0
 	ScoreSystem.connect("game_over", end_game)
+	ScoreSystem.connect("explosion", defeat)
 	ui_panel.visible = false
 	#game_over.visible = false
 	#recap_score.visible = false
@@ -48,7 +55,11 @@ func start_game():
 	await get_tree().create_timer(2.3).timeout
 	spawn_obstacles()
 
+func defeat():
+	explosion_sfx.play(0.0)
+
 func end_game():
+	loose_sfx.play(0.0)
 	obs_speed = 0
 	stop_parallax()
 	player.dead = true
@@ -86,6 +97,7 @@ func _on_border_left_area_entered(area: Area2D) -> void:
 	spawn_obstacles()
 
 func add_score():
+	score_sfx.play(0.0)
 	ScoreSystem.cur_score += 1
 	if ScoreSystem.cur_score > ScoreSystem.pb_score:
 		ScoreSystem.pb_score = ScoreSystem.cur_score
