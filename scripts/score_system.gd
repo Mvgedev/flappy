@@ -27,5 +27,9 @@ func load_score():
 		pb_score = data["pb_score"] as int
 
 func end_game():
+	var timer = get_tree().create_timer(0.5)
+	Engine.time_scale = 0.5
+	await timer.timeout
+	Engine.time_scale = 1
 	emit_signal("game_over")
 	save_score()

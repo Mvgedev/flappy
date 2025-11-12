@@ -1,8 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://c5gydx4og72e"]
+[gd_scene load_steps=16 format=3 uid="uid://c5gydx4og72e"]
 
 [ext_resource type="PackedScene" uid="uid://bqt183ikvb1ni" path="res://scenes/player.tscn" id="1_8mhku"]
 [ext_resource type="Script" uid="uid://d1g147ojau25o" path="res://scripts/game_manager.gd" id="1_85ytm"]
+[ext_resource type="Texture2D" uid="uid://cjcgxip2mdvsa" path="res://assets/sprites/background.png" id="1_vnpv3"]
+[ext_resource type="Texture2D" uid="uid://5veg4qanxl7n" path="res://assets/sprites/mid_bg2.png" id="2_2yu03"]
+[ext_resource type="Texture2D" uid="uid://bj3eignyh0rxf" path="res://assets/sprites/foreground.png" id="2_4m8lb"]
 [ext_resource type="PackedScene" uid="uid://cyo4n6qvd65tp" path="res://scenes/killzone.tscn" id="3_3uriw"]
+[ext_resource type="Texture2D" uid="uid://dag12bwiwf4qf" path="res://assets/sprites/mid_background.png" id="3_5vo8s"]
 [ext_resource type="Texture2D" uid="uid://d0i20lu022q7k" path="res://assets/sprites/UI Box.png" id="3_rxmqw"]
 [ext_resource type="FontFile" uid="uid://yxv4f1wj3ql8" path="res://assets/fonts/GothicPixels.ttf" id="4_dv2sx"]
 [ext_resource type="Texture2D" uid="uid://c5pk38y6wc0pu" path="res://assets/sprites/Button_Normal.png" id="5_dthvl"]
@@ -22,6 +26,42 @@ a = Vector2(0, 162)
 b = Vector2(0, -160)
 
 [node name="GameScreen" type="Node2D"]
+
+[node name="Landscape" type="Node" parent="."]
+
+[node name="Background" type="Sprite2D" parent="Landscape"]
+texture = ExtResource("1_vnpv3")
+
+[node name="ParallaxTentacles" type="Parallax2D" parent="Landscape"]
+scroll_scale = Vector2(-1, 0)
+repeat_size = Vector2(576, 0)
+autoscroll = Vector2(-30, 0)
+follow_viewport = false
+ignore_camera_scroll = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Landscape/ParallaxTentacles"]
+texture = ExtResource("2_2yu03")
+
+[node name="ParallaxRocks" type="Parallax2D" parent="Landscape"]
+scroll_scale = Vector2(-1, 0)
+repeat_size = Vector2(576, 0)
+autoscroll = Vector2(-50, 0)
+follow_viewport = false
+ignore_camera_scroll = true
+
+[node name="RocksMidground" type="Sprite2D" parent="Landscape/ParallaxRocks"]
+texture = ExtResource("3_5vo8s")
+
+[node name="ParallaxForeground" type="Parallax2D" parent="Landscape"]
+scroll_scale = Vector2(-1, 0)
+repeat_size = Vector2(576, 0)
+autoscroll = Vector2(-70, 0)
+follow_viewport = false
+ignore_camera_scroll = true
+
+[node name="Cave Foreground" type="Sprite2D" parent="Landscape/ParallaxForeground"]
+z_index = 5
+texture = ExtResource("2_4m8lb")
 
 [node name="GameManager" type="Node" parent="."]
 unique_name_in_owner = true
@@ -111,6 +151,44 @@ text = "Play"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Labels" type="Node" parent="CanvasLayer"]
+
+[node name="Score" type="Label" parent="CanvasLayer/Labels"]
+offset_left = -279.0
+offset_top = -155.0
+offset_right = -208.0
+offset_bottom = -132.0
+theme_override_fonts/font = ExtResource("4_dv2sx")
+theme_override_font_sizes/font_size = 16
+text = "Score: X"
+
+[node name="Best Score" type="Label" parent="CanvasLayer/Labels"]
+offset_left = -279.0
+offset_top = -134.0
+offset_right = -115.0
+offset_bottom = -111.0
+theme_override_fonts/font = ExtResource("4_dv2sx")
+theme_override_font_sizes/font_size = 16
+text = "Best score: X"
+
+[node name="Instruction" type="Label" parent="CanvasLayer/Labels"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -781.0
+offset_top = -341.5
+offset_right = -371.0
+offset_bottom = -306.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_dv2sx")
+theme_override_font_sizes/font_size = 16
+text = "Press space or left mouse button
+to start the game"
+horizontal_alignment = 1
+
 [node name="Borders" type="Node" parent="."]
 
 [node name="KillzoneBottom" parent="Borders" instance=ExtResource("3_3uriw")]
@@ -140,44 +218,6 @@ collision_layer = 3
 shape = SubResource("SegmentShape2D_rxmqw")
 
 [node name="Obstacles" type="Node" parent="."]
-
-[node name="Labels" type="Node" parent="."]
-
-[node name="Score" type="Label" parent="Labels"]
-offset_left = -279.0
-offset_top = -155.0
-offset_right = -239.0
-offset_bottom = -132.0
-theme_override_fonts/font = ExtResource("4_dv2sx")
-theme_override_font_sizes/font_size = 16
-text = "Score: X"
-
-[node name="Best Score" type="Label" parent="Labels"]
-offset_left = -279.0
-offset_top = -134.0
-offset_right = -115.0
-offset_bottom = -111.0
-theme_override_fonts/font = ExtResource("4_dv2sx")
-theme_override_font_sizes/font_size = 16
-text = "Best score: X"
-
-[node name="Instruction" type="Label" parent="Labels"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -781.0
-offset_top = -341.5
-offset_right = -371.0
-offset_bottom = -306.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("4_dv2sx")
-theme_override_font_sizes/font_size = 16
-text = "Press space or left mouse button
-to start the game"
-horizontal_alignment = 1
 
 [connection signal="button_down" from="CanvasLayer/UIPanel/TextureRect/RetryButton" to="CanvasLayer/UIPanel/TextureRect/RetryButton" method="_on_button_down"]
 [connection signal="button_up" from="CanvasLayer/UIPanel/TextureRect/RetryButton" to="CanvasLayer/UIPanel/TextureRect/RetryButton" method="_on_button_up"]

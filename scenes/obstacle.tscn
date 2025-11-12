@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dp6hjc82g11om"]
 
-[ext_resource type="Texture2D" uid="uid://bn4wofrdeekrj" path="res://assets/sprites/Tentacle.png" id="1_drdry"]
+[ext_resource type="Texture2D" uid="uid://bfdxadr3tj83i" path="res://assets/sprites/Tentacle_white.png" id="1_drdry"]
 [ext_resource type="PackedScene" uid="uid://cyo4n6qvd65tp" path="res://scenes/killzone.tscn" id="2_drdry"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_drdry"]

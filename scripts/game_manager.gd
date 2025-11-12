@@ -4,14 +4,19 @@ extends Node
 @onready var obstacles: Node = $"../Obstacles"
 @onready var border_right: Area2D = $"../Borders/BorderRight"
 
-#Labels
-@onready var score: Label = $"../Labels/Score"
-@onready var best_score: Label = $"../Labels/Best Score"
-@onready var instruction: Label = $"../Labels/Instruction"
+#UI
+@onready var score: Label = $"../CanvasLayer/Labels/Score"
+@onready var best_score: Label = $"../CanvasLayer/Labels/Best Score"
+@onready var instruction: Label = $"../CanvasLayer/Labels/Instruction"
+
 @onready var game_over: Label = $"../CanvasLayer/UIPanel/TextureRect/GameOver"
 @onready var recap_score: Label = $"../CanvasLayer/UIPanel/TextureRect/Recap score"
 @onready var ui_panel: Control = $"../CanvasLayer/UIPanel"
 
+#Landscape
+@onready var parallax_foreground: Parallax2D = $"../Landscape/ParallaxForeground"
+@onready var parallax_rocks: Parallax2D = $"../Landscape/ParallaxRocks"
+@onready var parallax_tentacles: Parallax2D = $"../Landscape/ParallaxTentacles"
 
 var OBSTACLES_PAIR = preload("res://scenes/obstacles_pair.tscn")
 # Spawn y -80 to y 80 for obstacles
@@ -19,6 +24,9 @@ var OBSTACLES_PAIR = preload("res://scenes/obstacles_pair.tscn")
 # Game values
 var game_start = false
 var obs_speed = 100
+var foreground_speed = -70
+var rocks_speed = -50
+var tentacles_speed = -30
 
 
 # Called when the node enters the scene tree for the first time.
@@ -42,6 +50,7 @@ func start_game():
 
 func end_game():
 	obs_speed = 0
+	stop_parallax()
 	player.dead = true
 	score.visible = false
 	best_score.visible = false
@@ -60,8 +69,17 @@ func spawn_obstacles():
 	
 
 func obstacle_speed_variant():
-	obs_speed = 100 + ScoreSystem.cur_score * 10
+	var boost = ScoreSystem.cur_score * 10
+	obs_speed = 100 + boost
+	parallax_foreground.autoscroll = Vector2(foreground_speed + -boost, 0)
+	parallax_rocks.autoscroll = Vector2(rocks_speed + -boost, 0)
+	parallax_tentacles.autoscroll = Vector2(tentacles_speed + -boost, 0)
 	
+
+func stop_parallax():
+	parallax_foreground.autoscroll = Vector2(0, 0)
+	parallax_rocks.autoscroll = Vector2(0,0)
+	parallax_tentacles.autoscroll = Vector2(0,0)
 
 func _on_border_left_area_entered(area: Area2D) -> void:
 	area.queue_free()
