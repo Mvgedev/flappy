@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 ScoreSystem="*res://scripts/score_system.gd"
 Bgm="*res://scenes/bgm.tscn"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [input]
 
 Flap={
